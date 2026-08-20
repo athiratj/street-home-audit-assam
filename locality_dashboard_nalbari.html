@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Nalbari — Locality Dashboard · Nagar Saathi Fellowship</title>
+
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; padding: 24px 32px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #2D3047; background: #FAFAFA;
+        font-size: 14px;
+      }
+      .header { margin-bottom: 20px; }
+      .header h1 { margin: 0 0 4px 0; font-size: 26px; font-weight: 700; }
+      .header .subtitle { color: #666; font-size: 13px; font-style: italic; }
+      .table-wrap {
+        overflow: auto;
+        max-height: calc(100vh - 260px);
+        border: 1px solid #E0E0E0;
+        border-radius: 6px;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      }
+      table.dashboard {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        font-size: 13px;
+      }
+      table.dashboard th {
+        position: sticky; top: 0;
+        background: #2D3047; color: white;
+        font-weight: 600;
+        padding: 10px 8px;
+        text-align: center;
+        border-right: 1px solid #4a4d68;
+        z-index: 2;
+        white-space: nowrap;
+        font-size: 12px;
+        cursor: pointer;
+        user-select: none;
+      }
+      table.dashboard th.sortable:hover { background: #3d4058; }
+      table.dashboard th.sortable::after { content: " ⇅"; opacity: 0.4; font-size: 10px; }
+      table.dashboard th.sort-asc::after { content: " ↑"; opacity: 1; }
+      table.dashboard th.sort-desc::after { content: " ↓"; opacity: 1; }
+      table.dashboard td {
+        padding: 8px 8px;
+        text-align: center;
+        border-right: 1px solid #F0F0F0;
+        border-bottom: 1px solid #F0F0F0;
+      }
+      table.dashboard td.locality {
+        text-align: left;
+        font-weight: 600;
+        background: #FAFAFA;
+        position: sticky; left: 0;
+        z-index: 1;
+        min-width: 220px;
+        max-width: 260px;
+        border-right: 2px solid #E0E0E0;
+      }
+      table.dashboard td.topissues {
+        text-align: left;
+        color: #555;
+        font-size: 12px;
+        min-width: 260px;
+      }
+      table.dashboard td.na { background: #F2F2F2; color: #999; }
+      table.dashboard tr:hover td:not(.locality) { filter: brightness(0.95); }
+      table.dashboard tr:hover td.locality { background: #EEF3F7; }
+      
+      .legend {
+        margin-top: 24px;
+        padding: 16px 20px;
+        background: white;
+        border-radius: 6px;
+        border: 1px solid #E0E0E0;
+      }
+      .legend-title { font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+      .legend-row { display: flex; align-items: center; margin-bottom: 8px; }
+      .gradient {
+        width: 180px; height: 14px;
+        border: 1px solid #888;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+      .legend-lbl { font-size: 12px; color: #444; }
+      .col-key {
+        margin-top: 12px; padding-top: 12px;
+        border-top: 1px solid #EEE;
+        font-size: 11.5px; color: #555; line-height: 1.55;
+      }
+      .note {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: #FFF8E7;
+        border-left: 3px solid #F4A259;
+        font-size: 12px; color: #4a4030;
+      }
+      
+      @media print {
+        body { padding: 12px; background: white; font-size: 11px; }
+        .table-wrap { max-height: none; overflow: visible; box-shadow: none; }
+        table.dashboard th { position: static; }
+        table.dashboard td.locality { position: static; }
+      }
+    </style>
+    
+</head>
+<body>
+  <div class="header">
+    <h1>Nalbari — Locality Dashboard</h1>
+    <div class="subtitle">Nagar Saathi Fellowship · Early findings from audit activity (3–18 August 2026) · 
+      21 localities · 300 total audits · 58 critical issues · 
+      Sorted by total audits (click any column header to re-sort)</div>
+  </div>
+  <div class="table-wrap">
+    <table class="dashboard">
+      <thead><tr><th class="sortable" data-col="0">Locality</th><th class="sortable" data-col="1">Total<br>audits</th><th class="sortable" data-col="2">Household</th><th class="sortable" data-col="3">Waste</th><th class="sortable" data-col="4">Drain</th><th class="sortable" data-col="5">Other</th><th class="sortable" data-col="6">Unique<br>fellows</th><th class="sortable" data-col="7">Critical<br>issues</th><th class="sortable" data-col="8">Moderate</th><th class="sortable" data-col="9">Low</th><th class="sortable" data-col="10">Issue<br>density</th><th class="sortable" data-col="11">Diversity<br>(# categories)</th><th class="sortable" data-col="12">Coverage<br>(% homes served)</th><th class="sortable" data-col="13">Home<br>segregation %</th><th class="sortable" data-col="14">Burn/dump<br>when collector skips</th><th class="sortable" data-col="15">Top issues here</th></tr></thead>
+      <tbody><tr><td class="locality">Shanti Square / Santipur, Nalbari town</td><td style="background:#feffff;color:#2D3047;font-weight:normal" data-value="77">77</td><td style="background:#feffff;color:#2D3047;font-weight:normal" data-value="53">53</td><td style="background:#feffff;color:#2D3047;font-weight:normal" data-value="15">15</td><td style="background:#f0f7fb;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#feffff;color:#2D3047;font-weight:normal" data-value="8">8</td><td style="background:#feffff;color:#2D3047;font-weight:normal" data-value="13">13</td><td style="background:#ffffff;color:#2D3047;font-weight:bold" data-value="17">17</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="72">72</td><td style="background:#cfcfcf;color:#2D3047;font-weight:normal" data-value="17">17</td><td style="background:#ffc8c8;color:#2D3047;font-weight:normal" data-value="1.38">1.38</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="11">11</td><td style="background:#dcf4df;color:#2D3047;font-weight:normal" data-value="23.0">23%</td><td style="background:#c6ebd1;color:#2D3047;font-weight:normal" data-value="32.0">32%</td><td style="background:#ff9898;color:#2D3047;font-weight:normal" data-value="50.0">50%</td><td class="topissues">Collection service gap, Open dumping, No dustbin infrastructure</td></tr><tr><td class="locality">Nalbari town area</td><td style="background:#3ba9c6;color:#FFFFFF;font-weight:normal" data-value="53">53</td><td style="background:#47adcb;color:#2D3047;font-weight:normal" data-value="35">35</td><td style="background:#1b88a5;color:#FFFFFF;font-weight:normal" data-value="12">12</td><td style="background:#f0f7fb;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#56b4d1;color:#2D3047;font-weight:normal" data-value="5">5</td><td style="background:#1f96b3;color:#FFFFFF;font-weight:normal" data-value="10">10</td><td style="background:#ffffff;color:#2D3047;font-weight:bold" data-value="17">17</td><td style="background:#fbc68c;color:#2D3047;font-weight:normal" data-value="56">56</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="24">24</td><td style="background:#ffa6a6;color:#2D3047;font-weight:normal" data-value="1.83">1.83</td><td style="background:#8c6ac9;color:#FFFFFF;font-weight:normal" data-value="10">10</td><td style="background:#6dc399;color:#2D3047;font-weight:normal" data-value="65.0">65%</td><td style="background:#a0dab9;color:#2D3047;font-weight:normal" data-value="46.0">46%</td><td style="background:#ffbdbd;color:#2D3047;font-weight:normal" data-value="38.0">38%</td><td class="topissues">Waste accumulation, Collection service gap, Mixed collection</td></tr><tr><td class="locality">Kachimpur area</td><td style="background:#7ac2de;color:#2D3047;font-weight:normal" data-value="42">42</td><td style="background:#69bbd8;color:#2D3047;font-weight:normal" data-value="31">31</td><td style="background:#abd6ec;color:#2D3047;font-weight:normal" data-value="6">6</td><td style="background:#d0e6f3;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#d6e9f4;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#e6f2f8;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffe9ca;color:#2D3047;font-weight:normal" data-value="33">33</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffebeb;color:#2D3047;font-weight:normal" data-value="0.79">0.79</td><td style="background:#ebdfff;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="topissues">Collection service gap, No dustbin infrastructure, Drain overflow / waterlogging</td></tr><tr><td class="locality">Bardhantali</td><td style="background:#aad6eb;color:#2D3047;font-weight:normal" data-value="31">31</td><td style="background:#91cbe7;color:#2D3047;font-weight:normal" data-value="26">26</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#56b4d1;color:#2D3047;font-weight:normal" data-value="5">5</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fff9f9;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fcc88f;color:#2D3047;font-weight:normal" data-value="55">55</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="24">24</td><td style="background:#f06168;color:#2D3047;font-weight:bold" data-value="2.58">2.58</td><td style="background:#9b7dd0;color:#2D3047;font-weight:normal" data-value="9">9</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#b5e3c6;color:#2D3047;font-weight:normal" data-value="38.0">38%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="topissues">Collection service gap, Waste accumulation, Open dumping</td></tr><tr><td class="locality">Sondha</td><td style="background:#d9ebf5;color:#2D3047;font-weight:normal" data-value="18">18</td><td style="background:#c7e3f1;color:#2D3047;font-weight:normal" data-value="16">16</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#d6e9f4;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#c6e2f1;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#f06168;color:#2D3047;font-weight:bold" data-value="11">11</td><td style="background:#fff9f1;color:#2D3047;font-weight:normal" data-value="11">11</td><td style="background:#f8f8f8;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ffc8c8;color:#2D3047;font-weight:normal" data-value="1.39">1.39</td><td style="background:#b8a2de;color:#2D3047;font-weight:normal" data-value="7">7</td><td style="background:#c3e9cf;color:#2D3047;font-weight:normal" data-value="33.0">33%</td><td style="background:#c8ecd2;color:#2D3047;font-weight:normal" data-value="31.0">31%</td><td style="background:#ff9898;color:#2D3047;font-weight:normal" data-value="50.0">50%</td><td class="topissues">Collection service gap, Open burning of waste, Mixed collection</td></tr><tr><td class="locality">Dangardi</td><td style="background:#e6f2f8;color:#2D3047;font-weight:normal" data-value="12">12</td><td style="background:#eaf4f9;color:#2D3047;font-weight:normal" data-value="7">7</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#56b4d1;color:#2D3047;font-weight:normal" data-value="5">5</td><td style="background:#e6f2f8;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fff3f3;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fff7eb;color:#2D3047;font-weight:normal" data-value="16">16</td><td style="background:#fbfbfb;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffb3b3;color:#2D3047;font-weight:normal" data-value="1.67">1.67</td><td style="background:#b8a2de;color:#2D3047;font-weight:normal" data-value="7">7</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#eaf8ec;color:#2D3047;font-weight:normal" data-value="14.0">14%</td><td style="background:#ff9898;color:#2D3047;font-weight:normal" data-value="50.0">50%</td><td class="topissues">Collection service gap, Road damage / potholes, Waste accumulation</td></tr><tr><td class="locality">Billeswar</td><td style="background:#e6f2f8;color:#2D3047;font-weight:normal" data-value="12">12</td><td style="background:#edf5fa;color:#2D3047;font-weight:normal" data-value="6">6</td><td style="background:#d1e7f3;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#d6e9f4;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffeded;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#fff9ee;color:#2D3047;font-weight:normal" data-value="13">13</td><td style="background:#fdfdfd;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffc6c6;color:#2D3047;font-weight:normal" data-value="1.42">1.42</td><td style="background:#a990d6;color:#2D3047;font-weight:normal" data-value="8">8</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#e5f7e7;color:#2D3047;font-weight:normal" data-value="17.0">17%</td><td style="background:#ffffff;color:#2D3047;font-weight:bold" data-value="100.0">100%</td><td class="topissues">Collection service gap, No dustbin infrastructure, Open burning of waste</td></tr><tr><td class="locality">(Unnamed)</td><td style="background:#e8f3f9;color:#2D3047;font-weight:normal" data-value="11">11</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#feffff;color:#2D3047;font-weight:normal" data-value="11">11</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#afd8ec;color:#2D3047;font-weight:normal" data-value="5">5</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0.00</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="topissues">—</td></tr><tr><td class="locality">No.2 Nimualatima</td><td style="background:#ecf5fa;color:#2D3047;font-weight:normal" data-value="9">9</td><td style="background:#edf5fa;color:#2D3047;font-weight:normal" data-value="6">6</td><td style="background:#f4f9fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#f0f7fb;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#eaf4f9;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fff3f3;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fff9ee;color:#2D3047;font-weight:normal" data-value="13">13</td><td style="background:#f8f8f8;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ff9898;color:#2D3047;font-weight:normal" data-value="2.0">2.00</td><td style="background:#9b7dd0;color:#2D3047;font-weight:normal" data-value="9">9</td><td style="background:#e0f5e3;color:#2D3047;font-weight:normal" data-value="20.0">20%</td><td style="background:#c3e9cf;color:#2D3047;font-weight:normal" data-value="33.0">33%</td><td style="background:#ff9898;color:#2D3047;font-weight:normal" data-value="50.0">50%</td><td class="topissues">Collection service gap, Mixed collection, Open dumping</td></tr><tr><td class="locality">Pitnipara</td><td style="background:#f0f7fb;color:#2D3047;font-weight:normal" data-value="7">7</td><td style="background:#fcfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#deedf6;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#f0f7fb;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#d6e9f4;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#e6f2f8;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fff9f9;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fffdfa;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffeded;color:#2D3047;font-weight:normal" data-value="0.71">0.71</td><td style="background:#ebdfff;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="na" data-value="">—</td><td class="topissues">No dustbin infrastructure, Road damage / potholes, Collection service gap</td></tr><tr><td class="locality">Nizpokowa</td><td style="background:#f5f9fc;color:#2D3047;font-weight:normal" data-value="5">5</td><td style="background:#f9fcfd;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#f4f9fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#e1eff7;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffdfa;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffeaea;color:#2D3047;font-weight:normal" data-value="0.8">0.80</td><td style="background:#ebdfff;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="na" data-value="">—</td><td class="topissues">Collection service gap, No dustbin infrastructure, Broken drain infrastructure</td></tr><tr><td class="locality">Sualkuchi town area</td><td style="background:#f7fbfd;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#e9f3f9;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#f0f7fb;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#eaf4f9;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#e6f2f8;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fff3f3;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fffdf9;color:#2D3047;font-weight:normal" data-value="5">5</td><td style="background:#f8f8f8;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#f2686f;color:#2D3047;font-weight:bold" data-value="2.5">2.50</td><td style="background:#b8a2de;color:#2D3047;font-weight:normal" data-value="7">7</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="topissues">Waste accumulation, No dustbin infrastructure, Drain overflow / waterlogging</td></tr><tr><td class="locality">Pub-Kalakuchi</td><td style="background:#f7fbfd;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#fcfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#f4f9fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#d6e9f4;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffbf5;color:#2D3047;font-weight:normal" data-value="8">8</td><td style="background:#fbfbfb;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#f2686f;color:#2D3047;font-weight:bold" data-value="2.5">2.50</td><td style="background:#a990d6;color:#2D3047;font-weight:normal" data-value="8">8</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="na" data-value="">—</td><td class="topissues">Open dumping, Pest / smell / health hazard, Waste accumulation</td></tr><tr><td class="locality">Chamata</td><td style="background:#f9fcfd;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#f6fafd;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#e6f2f8;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffdf9;color:#2D3047;font-weight:normal" data-value="5">5</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffb3b3;color:#2D3047;font-weight:normal" data-value="1.67">1.67</td><td style="background:#f1e9ff;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#c3e9cf;color:#2D3047;font-weight:normal" data-value="33.0">33%</td><td class="na" data-value="">—</td><td class="topissues">Collection service gap, Pest / smell / health hazard</td></tr><tr><td class="locality">Buri Nagar</td><td style="background:#f9fcfd;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#deedf6;color:#2D3047;font-weight:normal" data-value="3">3</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffdfa;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffcccc;color:#2D3047;font-weight:normal" data-value="1.33">1.33</td><td style="background:#f1e9ff;color:#2D3047;font-weight:normal" data-value="2">2</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="topissues">No dustbin infrastructure, Open dumping</td></tr><tr><td class="locality">Cherabari</td><td style="background:#fbfdfe;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#f9fcfd;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fff3f3;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fffdfa;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#e63946;color:#FFFFFF;font-weight:bold" data-value="3.0">3.00</td><td style="background:#e1d2fc;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#94d5b2;color:#2D3047;font-weight:normal" data-value="50.0">50%</td><td class="na" data-value="">—</td><td class="topissues">Open burning of waste, Collection service gap, Waste accumulation</td></tr><tr><td class="locality">Milanpur</td><td style="background:#fbfdfe;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#f9fcfd;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffffe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fff2f2;color:#2D3047;font-weight:normal" data-value="0.5">0.50</td><td style="background:#f8f4ff;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#94d5b2;color:#2D3047;font-weight:normal" data-value="50.0">50%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="topissues">Collection service gap</td></tr><tr><td class="locality">No.2 Khalihamari</td><td style="background:#fbfdfe;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#fcfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#eaf4f9;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fdfdfd;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fff2f2;color:#2D3047;font-weight:normal" data-value="0.5">0.50</td><td style="background:#f8f4ff;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fefffe;color:#2D3047;font-weight:normal" data-value="100.0">100%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="topissues">Mixed collection</td></tr><tr><td class="locality">Dakshin bezera / Khudra Sonkara</td><td style="background:#fdfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fcfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffdfa;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:bold" data-value="4.0">4.00</td><td style="background:#e1d2fc;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td class="na" data-value="">—</td><td class="topissues">Waste accumulation, No dustbin infrastructure, Collection service gap</td></tr><tr><td class="locality">Patta / No 136 Ward No 4 / Khata No 460, Nalbari town</td><td style="background:#fdfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#eaf4f9;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffdfa;color:#2D3047;font-weight:normal" data-value="4">4</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:bold" data-value="4.0">4.00</td><td style="background:#e1d2fc;color:#2D3047;font-weight:normal" data-value="4">4</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="na" data-value="">—</td><td class="topissues">Waste accumulation, Open dumping, Broken drain infrastructure</td></tr><tr><td class="locality">Sariahtali</td><td style="background:#fdfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#fcfefe;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#f3f8fc;color:#2D3047;font-weight:normal" data-value="1">1</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#fffefc;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0">0</td><td style="background:#ff9898;color:#2D3047;font-weight:normal" data-value="2.0">2.00</td><td style="background:#f1e9ff;color:#2D3047;font-weight:normal" data-value="2">2</td><td style="background:#ffffff;color:#2D3047;font-weight:normal" data-value="0.0">0%</td><td style="background:#fefffe;color:#2D3047;font-weight:normal" data-value="100.0">100%</td><td class="na" data-value="">—</td><td class="topissues">Waste accumulation, Collection service gap</td></tr></tbody>
+    </table>
+  </div>
+  
+    <div class="legend">
+      <div class="legend-title">How to read the colours</div>
+      <div class="legend-row">
+        <div class="gradient" style="background:linear-gradient(to right,#ffffff 0%, #f7fbfd 5%, #eff6fb 10%, #e7f2f8 15%, #deedf6 20%, #d6e9f4 25%, #c8e3f1 30%, #b9ddee 35%, #abd6ec 40%, #9cd0e9 45%, #8dcae6 50%, #79c1de 55%, #62b8d5 60%, #4cafcd 65%, #36a6c4 70%, #219dbb 75%, #1b88a5 80%, #14728d 85%, #0e5b75 90%, #08455d 95%, #023047 100%)"></div>
+        <span class="legend-lbl"><b>Effort scale</b> (audits, fellows) — light to dark blue as count increases</span>
+      </div>
+      <div class="legend-row">
+        <div class="gradient" style="background:linear-gradient(to right,#ffffff 0%, #fffafa 5%, #fff5f5 10%, #fff0f0 15%, #ffeaea 20%, #ffe5e5 25%, #ffd6d6 30%, #ffc7c7 35%, #ffb7b7 40%, #ffa8a8 45%, #ff9898 50%, #fa8689 55%, #f57378 60%, #f05f67 65%, #eb4b56 70%, #e63946 75%, #df313e 80%, #d72936 85%, #d0212e 90%, #c81926 95%, #c1121f 100%)"></div>
+        <span class="legend-lbl"><b>Concern scale</b> (critical count, issue density, burn/dump %) — white to red as severity rises</span>
+      </div>
+      <div class="legend-row">
+        <div class="gradient" style="background:linear-gradient(to right,#ffffff 0%, #f8fdf8 5%, #f0faf1 10%, #e8f8ea 15%, #e0f5e3 20%, #d8f3dc 25%, #cbedd4 30%, #bde7cb 35%, #b0e1c3 40%, #a2dbba 45%, #94d5b2 50%, #88cfaa 55%, #7ac9a1 60%, #6dc399 65%, #5fbd90 70%, #52b788 75%, #4ab289 80%, #42ac8b 85%, #3aa78c 90%, #32a28e 95%, #2a9d8f 100%)"></div>
+        <span class="legend-lbl"><b>Positive-outcome scale</b> (coverage %, segregation %) — white to green as % rises</span>
+      </div>
+      <div class="legend-row">
+        <div class="gradient" style="background:linear-gradient(to right,#ffffff 0%, #fbf9ff 5%, #f8f3ff 10%, #f4edff 15%, #f0e7ff 20%, #ece1ff 25%, #e9dbff 30%, #e4d4fd 35%, #dccbf8 40%, #d4c3f2 45%, #ccbaed 50%, #c5b1e8 55%, #bda9e2 60%, #b5a0dd 65%, #ad96d8 70%, #a58bd5 75%, #9e81d1 80%, #9676cd 85%, #8e6cc9 90%, #8561c6 95%, #7e57c2 100%)"></div>
+        <span class="legend-lbl"><b>Diversity scale</b> (# issue categories seen) — informational, purple as it rises</span>
+      </div>
+      <div class="col-key">
+        <b>Column key:</b> Total audits + audit-type columns = fellow effort · Density = issues per audit · Diversity = distinct issue categories seen<br>
+        Coverage = % of surveyed homes with door-to-door collector · Home segregation = % who always separate wet/dry · Burn/dump = % who burn or dump when collector misses<br>
+        &ldquo;—&rdquo; = insufficient household data in that locality to compute the metric.
+      </div>
+      <div class="note">
+        <b>Reading small-sample rows:</b> the <em>Total audits</em> column is the reliability signal — a red cell on 1–2 audits is a lead to investigate, not a conclusion. 
+        Check total audits before acting on any extreme value.
+      </div>
+    </div>
+    
+  
+    <script>
+    (function() {
+      const table = document.querySelector('table.dashboard');
+      const headers = table.querySelectorAll('th.sortable');
+      const tbody = table.querySelector('tbody');
+      headers.forEach((th, colIdx) => {
+        th.addEventListener('click', () => {
+          const currentDir = th.classList.contains('sort-asc') ? 'asc' : th.classList.contains('sort-desc') ? 'desc' : null;
+          const newDir = currentDir === 'desc' ? 'asc' : 'desc';
+          headers.forEach(h => h.classList.remove('sort-asc','sort-desc'));
+          th.classList.add(newDir === 'asc' ? 'sort-asc' : 'sort-desc');
+          
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          rows.sort((a,b) => {
+            const av = a.children[colIdx].getAttribute('data-value');
+            const bv = b.children[colIdx].getAttribute('data-value');
+            // If data-value not set (label/text cols), sort by text
+            const aVal = av !== null ? (av === '' ? -Infinity : parseFloat(av)) : a.children[colIdx].innerText;
+            const bVal = bv !== null ? (bv === '' ? -Infinity : parseFloat(bv)) : b.children[colIdx].innerText;
+            let cmp;
+            if (typeof aVal === 'number' && typeof bVal === 'number') {
+              cmp = aVal - bVal;
+            } else {
+              cmp = String(aVal).localeCompare(String(bVal));
+            }
+            return newDir === 'asc' ? cmp : -cmp;
+          });
+          rows.forEach(r => tbody.appendChild(r));
+        });
+      });
+    })();
+    </script>
+    
+</body>
+</html>
